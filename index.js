@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const socketIO = require('socket.io');
 
-const io = socketIO.listen(server);
 const app = express();
 
 // Settings
@@ -15,3 +14,11 @@ app.use(express.static(path.join(__dirname,'public')));
 const server = app.listen(app.get('port'),()=>{
     console.log(`Servidor en puerto ${app.get('port')}`);
 });
+
+const io = socketIO(server);
+
+// WebSocket
+io.on('connection',(webSocket)=>{
+    console.log('new user connected',webSocket.id);
+})
+
