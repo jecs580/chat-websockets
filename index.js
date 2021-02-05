@@ -20,5 +20,12 @@ const io = socketIO(server);
 // WebSocket
 io.on('connection',(webSocket)=>{
     console.log('new user connected',webSocket.id);
+    webSocket.on('chat_message',(data)=>{
+        console.log(data);
+        io.sockets.emit('chat_message',data);
+    })
+    webSocket.on('chat_typing',(data)=>{
+        webSocket.broadcast.emit('chat_typing',data);
+    })
 })
 
